@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="false">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="4">
+
+        <TextView
+            android:id="@+id/currentWeightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="left|center"
+            android:layout_row="0"
+            android:text="Weight (kg):" />
+
+        <EditText
+            android:id="@+id/weightValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="0"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/lbsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="right|center"
+            android:layout_row="1"
+            android:text="Lbs:" />
+
+        <TextView
+            android:id="@+id/lbsValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|center"
+            android:layout_row="1"
+            android:text="999" />
+
+        <TextView
+            android:id="@+id/stoneLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="right|center"
+            android:layout_row="2"
+            android:text="Stone:" />
+
+        <TextView
+            android:id="@+id/stoneValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="left|center"
+            android:layout_row="2"
+            android:text="999" />
+
+        <Button
+            android:id="@+id/updateWeights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:layout_gravity="center"
+            android:layout_row="3"
+            android:layout_weight="1"
+            android:text="Update Weight" />
+
+    </GridLayout>
+</LinearLayout>
