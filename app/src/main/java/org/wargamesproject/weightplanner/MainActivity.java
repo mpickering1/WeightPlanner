@@ -4,75 +4,79 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import org.wargamesproject.weightplanner.model.WeightConverter;
+import org.wargamesproject.weightplanner.model.WeightType;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher
+public class MainActivity extends AppCompatActivity implements OnItemSelectedListener
 {
-    private WeightConverter weightModel;
+    private WeightType currentWeightUnits;
     private static final String TAG = "WEIGHTPLAN_MAIN";
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
-        this.weightModel = new WeightConverter();
+        Spinner unitsSpinner = (Spinner)findViewById(R.id.unitsSpinner);
 
-        TextView weightEntry = (TextView)findViewById(R.id.weightValueText);
-        weightEntry.addTextChangedListener(this);
-        weightEntry.setText(Double.toString(weightModel.getWeight()));
+        ArrayAdapter<WeightType> unitsAdapter = new ArrayAdapter<WeightType>(this,R.layout.support_simple_spinner_dropdown_item,WeightType.values());
+        unitsSpinner.setAdapter(unitsAdapter);
+        unitsSpinner.setOnItemSelectedListener(this);
+        unitsSpinner.setSelection(1);  // Default to pounds
 
-        TextView stoneView = (TextView)findViewById(R.id.stoneValue);
-        TextView poundsView = (TextView)findViewById(R.id.lbsValue);
-
-        stoneView.setText(Double.toString(weightModel.getWeightInStone()));
-        poundsView.setText(Double.toString(weightModel.getWeightInPounds()));
+        this.currentWeightUnits = WeightType.POUNDS;
     }
 
     //
-    // Implementation of methods declared in TextWater
+    // Implementation of methods declared in OnItemSelectedListener
     //
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        //Log.v(TAG, "In beforeTextChanged()...");
-        //Log.v(TAG, s.toString());
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count)
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
-        //Log.v(TAG, "In onTextChanged()...");
-        //Log.v(TAG, s.toString());
+        Log.v(TAG,"In onItemSelected()...");
+
+        WeightType item = (WeightType)parent.getItemAtPosition(position);
+
+        Log.v(TAG,item.toString());
+        Log.v(TAG,item.getClass().getName());
+
+        TextView currentWeightView = (TextView)findViewById(R.id.weightValueText);
+        TextView targetWeightView = (TextView)findViewById(R.id.targetValueText);
+        double currentWeight = Double.parseDouble(currentWeightView.getText().toString());
+        double targetWeight = Double.parseDouble(targetWeightView.getText().toString());
+
+        // Get the conversion factor
+        double conversionFactor = this.currentWeightUnits.convertTo(item);
+
+        Log.v(TAG,"conversionFactor = " + conversionFactor);
+
+        currentWeight = currentWeight * conversionFactor;
+        targetWeight = targetWeight * conversionFactor;
+
+        Log.v(TAG,"new currentWeight = " + currentWeight);
+        Log.v(TAG,"new targetWeight = " + targetWeight);
+
+        this.currentWeightUnits = item;
+
+        // Update the text views with the converted weight values
+        currentWeightView.setText(Double.toString(currentWeight));
+        targetWeightView.setText(Double.toString(targetWeight));
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
-        Log.v(TAG, "In afterTextChanged()...");
-        Log.v(TAG, s.toString());
-
-        try
-        {
-            this.weightModel.setWeight(Double.valueOf(s.toString()));
-
-            TextView stoneView = (TextView)findViewById(R.id.stoneValue);
-            TextView poundsView = (TextView)findViewById(R.id.lbsValue);
-
-            stoneView.setText(Double.toString(weightModel.getWeightInStone()));
-            poundsView.setText(Double.toString(weightModel.getWeightInPounds()));
-        }
-        catch (NumberFormatException e)
-        {
-            Log.e(TAG,"NumberFormatException on input for weight.  Expected number, got: " + s.toString());
-        }
+    public void onNothingSelected(AdapterView<?> parent)
+    {
+        // Does nothing
     }
-
-    //
-    // Private
-    //
 }

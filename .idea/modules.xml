@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WeightPlanner.iml" filepath="$PROJECT_DIR$/WeightPlanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WeightPlanner-Spinner.iml" filepath="$PROJECT_DIR$/WeightPlanner-Spinner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
