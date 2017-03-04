@@ -6,12 +6,12 @@ package org.wargamesproject.weightplanner.model;
 
 public enum WeightType
 {
-    KILOGRAMS("Kilograms",1.0,0.1574,2.2046),POUNDS("Pounds",0.4535,0.0714,1.0),STONE("Stone",6.3502,1.0,14.0);
+    KILOGRAMS("Kilograms",1.0f,0.1574f,2.2046f),POUNDS("Pounds",0.4535f,0.0714f,1.0f),STONE("Stone",6.3502f,1.0f,14.0f);
 
     private String description;
-    private double kg,stone,pounds;
+    private float kg,stone,pounds;
 
-    WeightType(String desc,double inKG,double inStone, double inPounds)
+    WeightType(String desc,float inKG,float inStone,float inPounds)
     {
         this.description = desc;
         this.kg = inKG;
@@ -24,9 +24,9 @@ public enum WeightType
         return this.description;
     }
 
-    public double convertTo(WeightType convertTo)
+    public float convertTo(WeightType convertTo)
     {
-        double conversionFactor = 0.0;
+        float conversionFactor = 0.0f;
 
         if (convertTo == KILOGRAMS)
         {
@@ -44,9 +44,9 @@ public enum WeightType
         return conversionFactor;
     }
 
-    public double getKg() { return this.kg; }
-    public double getStone() { return this.stone; }
-    public double getPounds() { return this.pounds; }
+    public float getKg() { return this.kg; }
+    public float getStone() { return this.stone; }
+    public float getPounds() { return this.pounds; }
 
     public String toString()
     {
